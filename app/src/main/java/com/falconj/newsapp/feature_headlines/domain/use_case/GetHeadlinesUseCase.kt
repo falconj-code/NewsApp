@@ -12,12 +12,13 @@ class GetHeadlinesUseCase(
     private val repository: NewsRepository
 ) {
     operator fun invoke(
-        countryCode: String,
-        pageNumber: Int
+        country: String,
+        page: Int,
+        pageSize: Int
     ): Flow<Resource<NewsResponse>> = flow {
         try {
             emit(Resource.Loading())
-            val headlines = repository.getHeadlines(countryCode, pageNumber)
+            val headlines = repository.getHeadlines(country, page, pageSize)
             emit(Resource.Success(headlines))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))

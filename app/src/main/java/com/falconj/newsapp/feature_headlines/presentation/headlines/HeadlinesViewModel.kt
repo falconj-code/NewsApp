@@ -19,15 +19,16 @@ class HeadlinesViewModel @Inject constructor(
     private val _state = mutableStateOf(HeadlinesState())
     val state: State<HeadlinesState> = _state
 
-    private val countryCode: String = "us"
-    private val pageNumber: Int = 1
+    private val country: String = "us"
+    private val page: Int = 1
+    private val pageSize: Int = 20
 
     init {
         getHeadlines()
     }
 
     private fun getHeadlines() {
-        newsUseCases.getHeadlinesUseCase(countryCode, pageNumber).onEach {
+        newsUseCases.getHeadlinesUseCase(country, page, pageSize).onEach {
             when (it) {
                 is Resource.Success -> {
                     _state.value = HeadlinesState(

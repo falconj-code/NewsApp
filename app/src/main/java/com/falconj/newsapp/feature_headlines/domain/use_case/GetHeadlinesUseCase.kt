@@ -17,7 +17,6 @@ class GetHeadlinesUseCase(
         pageSize: Int
     ): Flow<Resource<NewsResponse>> = flow {
         try {
-            emit(Resource.Loading())
             val headlines = repository.getHeadlines(country, page, pageSize)
             emit(Resource.Success(headlines))
         } catch (e: HttpException) {

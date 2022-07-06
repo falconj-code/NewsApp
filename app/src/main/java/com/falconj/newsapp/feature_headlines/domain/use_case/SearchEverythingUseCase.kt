@@ -8,21 +8,21 @@ import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 
-//class SearchEverythingUseCase(
-//    private val repository: NewsRepository
-//) {
-//    operator fun invoke(
-//        searchQuery: String,
-//        pageNumber: Int
-//    ): Flow<Resource<List<NewsResponse>>> = flow {
-//        try {
-//            emit(Resource.Loading())
-//            val searchEverything = repository.searchEverything(searchQuery, pageNumber)
-//            emit(Resource.Success(searchEverything))
-//        } catch (e: HttpException) {
-//            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
-//        } catch (e: IOException) {
-//            emit(Resource.Error("Couldn't reach server. Check your internet connection."))
-//        }
-//    }
-//}
+class SearchEverythingUseCase(
+    private val repository: NewsRepository
+) {
+    operator fun invoke(
+        searchQuery: String,
+        page: Int,
+        pageSize: Int
+    ): Flow<Resource<NewsResponse>> = flow {
+        try {
+            val searchEverything = repository.searchEverything(searchQuery, page, pageSize)
+            emit(Resource.Success(searchEverything))
+        } catch (e: HttpException) {
+            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
+        } catch (e: IOException) {
+            emit(Resource.Error("Couldn't reach server. Check your internet connection."))
+        }
+    }
+}

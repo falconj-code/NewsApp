@@ -19,6 +19,6 @@ class NewsRepositoryImpl(private val api: NewsApi) : NewsRepository {
         page: Int,
         pageSize: Int
     ): NewsResponse {
-        return api.searchEverything(searchQuery, page)
+        return api.searchEverything(searchQuery, page, pageSize)
     }
 }

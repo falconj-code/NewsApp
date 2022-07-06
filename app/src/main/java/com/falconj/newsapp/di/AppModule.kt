@@ -6,6 +6,7 @@ import com.falconj.newsapp.feature_headlines.data.repository.NewsRepositoryImpl
 import com.falconj.newsapp.feature_headlines.domain.repository.NewsRepository
 import com.falconj.newsapp.feature_headlines.domain.use_case.GetHeadlinesUseCase
 import com.falconj.newsapp.feature_headlines.domain.use_case.NewsUseCases
+import com.falconj.newsapp.feature_headlines.domain.use_case.SearchEverythingUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,6 +40,7 @@ object AppModule {
     fun provideNewsUseCases(repository: NewsRepository): NewsUseCases {
         return NewsUseCases(
             getHeadlinesUseCase = GetHeadlinesUseCase(repository),
+            searchEverythingUseCase = SearchEverythingUseCase(repository)
         )
     }
 }

@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.falconj.newsapp.feature_headlines.presentation.headlines.HeadlinesScreen
-import com.falconj.newsapp.feature_headlines.presentation.headlines.SearchScreen
+import com.falconj.newsapp.feature_headlines.presentation.search.SearchScreen
 import com.falconj.newsapp.ui.theme.NewsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 

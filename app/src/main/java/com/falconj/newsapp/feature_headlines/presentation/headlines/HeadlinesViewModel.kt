@@ -29,15 +29,6 @@ class HeadlinesViewModel @Inject constructor(
     var isLoading = mutableStateOf(false)
     var endReached = mutableStateOf(false)
 
-
-    private val _searchQuery = mutableStateOf("")
-    val searchQuery: State<String> = _searchQuery
-
-    private val _searchList = mutableStateOf<List<Article>>(listOf())
-    val searchList: State<List<Article>> = _searchList
-
-    private var searchJob: Job? = null
-
     init {
         getHeadlines()
     }
@@ -63,27 +54,6 @@ class HeadlinesViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
-
-    fun searchEverything(query: String) {
-        _searchQuery.value = query
-        searchJob?.cancel()
-        searchJob = viewModelScope.launch {
-            delay(500L)
-            newsUseCases.searchEverythingUseCase(query, curPage, PAGE_SIZE)
-                .onEach { result ->
-                    when (result) {
-                        is Resource.Success -> {
-                            _searchList.value = result.data?.articles ?: emptyList()
-                        }
-                        is Resource.Error -> {
-                            _searchList.value = result.data?.articles ?: emptyList()
-                        }
-                    }
-                }.launchIn(this)
-        }
-    }
-
-
 }
 
 

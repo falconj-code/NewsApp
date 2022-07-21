@@ -17,6 +17,7 @@ class SearchEverythingUseCase(
         pageSize: Int
     ): Flow<Resource<NewsResponse>> = flow {
         try {
+            emit(Resource.Loading())
             val searchEverything = repository.searchEverything(searchQuery, page, pageSize)
             emit(Resource.Success(searchEverything))
         } catch (e: HttpException) {

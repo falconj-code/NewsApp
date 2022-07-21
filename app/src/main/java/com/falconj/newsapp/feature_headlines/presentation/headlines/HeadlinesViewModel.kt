@@ -24,10 +24,17 @@ class HeadlinesViewModel @Inject constructor(
 
     private var curPage = 1
 
-    var everythingNewsList = mutableStateOf<List<Article>>(listOf())
-    var loadError = mutableStateOf("")
-    var isLoading = mutableStateOf(false)
-    var endReached = mutableStateOf(false)
+    private val _headlinesList = mutableStateOf<List<Article>>(listOf())
+    val headlinesList: State<List<Article>> = _headlinesList
+
+    private val _isLoading = mutableStateOf(false)
+    val isLoading: State<Boolean> = _isLoading
+
+    private val _endReached = mutableStateOf(false)
+    val endReached: State<Boolean> = _endReached
+
+    private val _loadError = mutableStateOf("")
+    val loadError: State<String> = _loadError
 
     init {
         getHeadlines()
@@ -35,21 +42,24 @@ class HeadlinesViewModel @Inject constructor(
 
     fun getHeadlines() {
         newsUseCases.getHeadlinesUseCase(COUNTRY, curPage, PAGE_SIZE).onEach {
-            isLoading.value = true
+            _isLoading.value = true
             when (it) {
                 is Resource.Success -> {
-                    endReached.value = curPage * PAGE_SIZE >= it.data!!.totalResults
+                    _endReached.value = curPage * PAGE_SIZE >= it.data!!.totalResults
                     val headlines = it.data.articles
 
                     curPage++
 
-                    loadError.value = ""
-                    isLoading.value = false
-                    everythingNewsList.value += headlines
+                    _loadError.value = ""
+                    _isLoading.value = false
+                    _headlinesList.value += headlines
                 }
                 is Resource.Error -> {
-                    loadError.value = it.message!!
-                    isLoading.value = false
+                    _loadError.value = it.message!!
+                    _isLoading.value = false
+                }
+                is Resource.Loading -> {
+                    _isLoading.value = true
                 }
             }
         }.launchIn(viewModelScope)

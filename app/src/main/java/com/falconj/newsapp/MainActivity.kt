@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
                         HeadlinesScreen(navController = navController)
                     }
                     composable(route = "searchEverything") {
-                        SearchScreen()
+                        SearchScreen(navController = navController)
                     }
                 }
 

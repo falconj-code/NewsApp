@@ -24,16 +24,21 @@ class SearchViewModel @Inject constructor(
 
     private var curPage = 1
 
-    var searchLoadError = mutableStateOf("")
-    var searchIsLoading = mutableStateOf(false)
-    var searchEndReached = mutableStateOf(false)
+    private val _searchList = mutableStateOf<List<Article>>(listOf())
+    val searchList: State<List<Article>> = _searchList
 
+    private val _isLoading = mutableStateOf(false)
+    val isLoading: State<Boolean> = _isLoading
+
+    private val _endReached = mutableStateOf(false)
+    val endReached: State<Boolean> = _endReached
+
+
+    private val _searchLoadError = mutableStateOf("")
+    val searchLoadError: State<String> = _searchLoadError
 
     private val _searchQuery = mutableStateOf("")
     val searchQuery: State<String> = _searchQuery
-
-    private val _searchList = mutableStateOf<List<Article>>(listOf())
-    val searchList: State<List<Article>> = _searchList
 
     private var searchJob: Job? = null
 
@@ -46,17 +51,21 @@ class SearchViewModel @Inject constructor(
                 .onEach { result ->
                     when (result) {
                         is Resource.Success -> {
-                            searchEndReached.value = curPage * PAGE_SIZE >= result.data!!.totalResults
+                            _endReached.value = curPage * PAGE_SIZE >= result.data!!.totalResults
                             val search = result.data.articles
 
                             curPage++
 
-                            searchLoadError.value = ""
-                            searchIsLoading.value = false
+                            _searchLoadError.value = ""
+                            _isLoading.value = false
                             _searchList.value += search
                         }
                         is Resource.Error -> {
-                            _searchList.value = result.data?.articles ?: emptyList()
+                            _searchLoadError.value = result.message!!
+                            _isLoading.value = false
+                        }
+                        is Resource.Loading -> {
+                            _isLoading.value = true
                         }
                     }
                 }.launchIn(this)

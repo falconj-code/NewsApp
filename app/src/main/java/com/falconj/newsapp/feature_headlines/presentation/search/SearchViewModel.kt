@@ -57,7 +57,7 @@ class SearchViewModel @Inject constructor(
 
                             _searchLoadError.value = ""
                             _isLoading.value = false
-                            _searchList.value += search
+                            _searchList.value = search
                         }
                         is Resource.Error -> {
                             _searchLoadError.value = result.message!!

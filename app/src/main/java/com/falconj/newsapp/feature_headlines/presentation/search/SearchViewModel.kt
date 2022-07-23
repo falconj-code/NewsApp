@@ -4,7 +4,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.falconj.newsapp.common.Constants.COUNTRY
 import com.falconj.newsapp.common.Constants.PAGE_SIZE
 import com.falconj.newsapp.common.Resource
 import com.falconj.newsapp.feature_headlines.data.remote.dto.Article

@@ -3,11 +3,16 @@ package com.falconj.newsapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.remember
+import androidx.navigation.NavArgument
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.falconj.newsapp.feature_headlines.presentation.headlines.HeadlinesScreen
 import com.falconj.newsapp.feature_headlines.presentation.search.SearchScreen
+import com.falconj.newsapp.feature_headlines.presentation.web_view.WebViewScreen
 import com.falconj.newsapp.ui.theme.NewsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,6 +33,20 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(route = "searchEverything") {
                         SearchScreen(navController = navController)
+                    }
+                    composable(
+                        route = "WebViewScreen/{articleUrl}",
+                        arguments = listOf(
+                            navArgument("argumentUrl") {
+                                type = NavType.StringType
+                                nullable = true
+                            }
+                        )
+                    ) {
+//                        val url = remember {
+//                            it.arguments?.getString("url")
+//                        }
+                        WebViewScreen()
                     }
                 }
 

@@ -10,11 +10,8 @@ import com.falconj.newsapp.common.Resource
 import com.falconj.newsapp.feature_headlines.data.remote.dto.Article
 import com.falconj.newsapp.feature_headlines.domain.use_case.NewsUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel

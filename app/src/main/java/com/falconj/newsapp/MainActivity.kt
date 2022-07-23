@@ -37,15 +37,11 @@ class MainActivity : ComponentActivity() {
                     composable(
                         route = "WebViewScreen/{articleUrl}",
                         arguments = listOf(
-                            navArgument("argumentUrl") {
+                            navArgument("articleUrl") {
                                 type = NavType.StringType
-                                nullable = true
                             }
                         )
                     ) {
-//                        val url = remember {
-//                            it.arguments?.getString("url")
-//                        }
                         WebViewScreen()
                     }
                 }

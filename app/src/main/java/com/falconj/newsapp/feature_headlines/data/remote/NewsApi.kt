@@ -2,7 +2,6 @@ package com.falconj.newsapp.feature_headlines.data.remote
 
 import com.falconj.newsapp.common.Constants.API_KEY
 import com.falconj.newsapp.feature_headlines.data.remote.dto.NewsResponse
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 

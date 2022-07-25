@@ -4,8 +4,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.falconj.newsapp.feature_headlines.data.remote.dto.Article
-import com.falconj.newsapp.feature_headlines.data.remote.dto.Source
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

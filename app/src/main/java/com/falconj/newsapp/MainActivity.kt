@@ -3,8 +3,6 @@ package com.falconj.newsapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.remember
-import androidx.navigation.NavArgument
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -45,7 +43,6 @@ class MainActivity : ComponentActivity() {
                         WebViewScreen()
                     }
                 }
-
             }
         }
     }

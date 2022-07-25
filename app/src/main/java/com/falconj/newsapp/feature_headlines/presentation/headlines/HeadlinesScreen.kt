@@ -3,6 +3,7 @@ package com.falconj.newsapp.feature_headlines.presentation.headlines
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -33,6 +34,12 @@ fun HeadlinesScreen(
                         Icon(
                             imageVector = Icons.Filled.Search,
                             contentDescription = "Search"
+                        )
+                    }
+                    IconButton(onClick = { viewModel.getHeadlines() }) {
+                        Icon(
+                            imageVector = Icons.Filled.Refresh,
+                            contentDescription = "Refresh"
                         )
                     }
                 },

@@ -15,15 +15,22 @@ class SearchEverythingUseCase(
         searchQuery: String,
         page: Int,
         pageSize: Int
-    ): Flow<Resource<NewsResponse>> = flow {
-        try {
-            emit(Resource.Loading())
-            val searchEverything = repository.searchEverything(searchQuery, page, pageSize)
-            emit(Resource.Success(searchEverything))
-        } catch (e: HttpException) {
-            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
-        } catch (e: IOException) {
-            emit(Resource.Error("Couldn't reach server. Check your internet connection."))
+    ): Flow<Resource<NewsResponse>> {
+
+        if(searchQuery.isBlank()) {
+            return flow {  }
+        }
+
+        return flow {
+            try {
+                emit(Resource.Loading())
+                val searchEverything = repository.searchEverything(searchQuery, page, pageSize)
+                emit(Resource.Success(searchEverything))
+            } catch (e: HttpException) {
+                emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
+            } catch (e: IOException) {
+                emit(Resource.Error("Couldn't reach server. Check your internet connection."))
+            }
         }
     }
 }

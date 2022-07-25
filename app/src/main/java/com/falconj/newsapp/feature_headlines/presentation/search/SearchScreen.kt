@@ -1,17 +1,18 @@
 package com.falconj.newsapp.feature_headlines.presentation.search
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,12 +29,13 @@ fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     val searchList = viewModel.searchList.value
+    val focusManager = LocalFocusManager.current
 
     Box {
         Column {
             TextField(
                 value = viewModel.searchQuery.value,
-                onValueChange = viewModel::searchEverything,
+                onValueChange = viewModel::onValueChange,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(64.dp),
@@ -62,25 +64,28 @@ fun SearchScreen(
                             .padding(8.dp)
                             .clickable {
                                 if (viewModel.searchQuery.value.isNotEmpty()) {
-                                    viewModel.searchEverything("")
+                                    viewModel.onValueChange("")
                                 } else {
                                     navController.navigateUp()
                                 }
                             }
                     )
-                }
+                },
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Search
+                ),
+                keyboardActions = KeyboardActions(
+                    onSearch = {
+                        viewModel.searchEverything(viewModel.searchQuery.value)
+                        focusManager.clearFocus()
+                    }
+                )
             )
-
 
             Spacer(modifier = Modifier.height(8.dp))
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(searchList.size) {
-                    if (it >= searchList.size - 1 &&
-                        !viewModel.endReached.value &&
-                        !viewModel.isLoading.value
-                    ) {
-                        viewModel.searchEverything(viewModel.searchQuery.value)
-                    }
+
                     val item = searchList[it]
                     val encodedUrl = URLEncoder.encode(item.url, StandardCharsets.UTF_8.toString())
                     NewsItem(
@@ -89,7 +94,6 @@ fun SearchScreen(
                             navController.navigate("WebViewScreen/${encodedUrl}")
                         }
                     )
-
                 }
             }
         }
@@ -109,5 +113,4 @@ fun SearchScreen(
             }
         }
     }
-
 }

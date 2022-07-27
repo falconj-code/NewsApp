@@ -9,5 +9,6 @@ object Constants {
     const val PAGE_SIZE = 20
     const val SEARCH_SIZE = 30
 
-    const val API_KEY = BuildConfig.API_KEY
+//    const val API_KEY = BuildConfig.API_KEY
+    const val API_KEY = "124e34a67676490e856cc8697f386341"
 }

@@ -1,2 +1,2 @@
 # NewsApp
-A simple news app with API, search, and paging function.
+A simple news app with API, search, and paging functions.
